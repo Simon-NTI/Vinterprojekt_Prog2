@@ -1,6 +1,6 @@
-class Dog : Animal
+abstract class Dog : Animal
 {
-    public Dog(string furColor) : base(furColor)
+    public Dog(int idNumber, Person owner) : base(idNumber, owner)
     {
 
     }

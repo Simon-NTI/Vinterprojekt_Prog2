@@ -1,9 +1,11 @@
 abstract class Animal
 {
-    string furColor;
-
-    public Animal(string furColor)
+    private string? furColor, name;
+    private int? idNumber;
+    private Person owner;
+    public Animal(int idNumber, Person owner)
     {
-        this.furColor = furColor;
+        this.idNumber = idNumber;
+        this.owner = owner;
     }
 }

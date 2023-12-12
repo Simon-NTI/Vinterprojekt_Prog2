@@ -1,0 +1,14 @@
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\bin\Debug\net7.0\Vinterprojekt_Prog2.exe
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\bin\Debug\net7.0\Vinterprojekt_Prog2.deps.json
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\bin\Debug\net7.0\Vinterprojekt_Prog2.runtimeconfig.json
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\bin\Debug\net7.0\Vinterprojekt_Prog2.dll
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\bin\Debug\net7.0\Vinterprojekt_Prog2.pdb
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\obj\Debug\net7.0\Vinterprojekt_Prog2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\obj\Debug\net7.0\Vinterprojekt_Prog2.AssemblyInfoInputs.cache
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\obj\Debug\net7.0\Vinterprojekt_Prog2.AssemblyInfo.cs
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\obj\Debug\net7.0\Vinterprojekt_Prog2.csproj.CoreCompileInputs.cache
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\obj\Debug\net7.0\Vinterprojekt_Prog2.dll
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\obj\Debug\net7.0\refint\Vinterprojekt_Prog2.dll
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\obj\Debug\net7.0\Vinterprojekt_Prog2.pdb
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\obj\Debug\net7.0\Vinterprojekt_Prog2.genruntimeconfig.cache
+C:\Users\simon.hall\Documents\Prog\Prog 2\Vinterprojekt_Prog2\obj\Debug\net7.0\ref\Vinterprojekt_Prog2.dll
