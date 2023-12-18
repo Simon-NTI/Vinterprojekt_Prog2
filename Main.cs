@@ -10,12 +10,14 @@ class Program
 
         Borzoi borzoi = new Borzoi(13, client);
 
-
         Dog[] dogs = new Dog[3];
         dogs[0] = borzoi;
 
-        Console.WriteLine(dogs.GetType());
-        Console.WriteLine(borzoi.GetType());
-        Console.WriteLine(dogs.GetType().IsAssignableFrom(borzoi.GetType()));
+
+        hotel.AppendNewAnimal();
+
+
+        //Console.WriteLine(borzoi.GetType().BaseType);
     }
+
 }

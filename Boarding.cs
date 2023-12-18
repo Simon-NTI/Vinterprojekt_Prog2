@@ -5,5 +5,4 @@ class Boarding : Establishment
         
     }
 
-
 }
