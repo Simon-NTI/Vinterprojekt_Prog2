@@ -1,3 +1,7 @@
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices.Marshalling;
+using System.Security.Cryptography;
+
 abstract class Establishment
 {
     private string location;
@@ -26,7 +30,25 @@ abstract class Establishment
                 {
                     Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(DogTypes), i)}");
                 }
+
+                switch(GetIntFromUser())
+                {
+                    case 1:
+                    
+                        break;
+                }
+
                 break;
         }
+    }
+
+    private static int GetIntFromUser() 
+    {
+        string? input = Console.ReadLine();
+        while (!int.TryParse(input, out int answer))
+        {
+            return answer;
+        }
+        return int.Parse(input);
     }
 }

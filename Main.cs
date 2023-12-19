@@ -13,11 +13,9 @@ class Program
         Dog[] dogs = new Dog[3];
         dogs[0] = borzoi;
 
-
-        hotel.AppendNewAnimal();
-
-
+        //hotel.AppendNewAnimal();
         //Console.WriteLine(borzoi.GetType().BaseType);
+        
     }
 
 }
