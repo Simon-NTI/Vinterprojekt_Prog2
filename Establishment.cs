@@ -1,12 +1,10 @@
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.InteropServices.Marshalling;
-using System.Security.Cryptography;
 
 abstract class Establishment
 {
     private string location;
     private string animal;
-    private List<Animal>? animalsOnSite = new();
+    private List<Animal> animalsOnSite = new();
+    private static List<Establishment> establishments = new List<Establishment>();
 
     enum DogTypes
     {
@@ -31,10 +29,10 @@ abstract class Establishment
                     Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(DogTypes), i)}");
                 }
 
-                switch(GetIntFromUser())
+                switch(Utils.GetIntFromUser())
                 {
                     case 1:
-                    
+                        //animalsOnSite.Add(new Borzoi(60));
                         break;
                 }
 
@@ -42,13 +40,15 @@ abstract class Establishment
         }
     }
 
-    private static int GetIntFromUser() 
+    public static void ViewOrModify()
     {
-        string? input = Console.ReadLine();
-        while (!int.TryParse(input, out int answer))
-        {
-            return answer;
-        }
-        return int.Parse(input);
+        int establishmentIndex;
+        Console.WriteLine("View or modify: \n",
+        "Please enter the locatin of the establishment you wish to view or modify");
+        string searchLocation = Console.ReadLine();
+
+        establishmentIndex = establishments.FindIndex(a => a.location.Equals(searchLocation));
+        Console.WriteLine(establishmentIndex);
+
     }
 }
