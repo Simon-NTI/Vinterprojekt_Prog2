@@ -6,23 +6,15 @@ class Program
 {
     static void Main(string[] args)
     {
-        List<Client> clients = new List<Client>
-        {
-            new("Peter", "74"),
-            new("Jeff", "52"),
-            new("Sean", "15")
-        };
+        Establishment.establishments.Add(new Hotel("Mars", "Cat"));
+        Establishment.establishments.Add(new Hotel("Mercury", "Dog"));
 
-        Console.WriteLine("What do you want to do?: ");
-        Console.WriteLine("1: View or modify hotels\n",
-        "2: View or modify daycares\n",
-        "3: View or modify boardings\n");
+        Establishment.establishments.Add(new Boarding("Saturn", "Cat"));
+        Establishment.establishments.Add(new Boarding("Earth", "Dog"));
 
-        switch(Utils.GetIntFromUser())
-        {
-            case 1:
+        Establishment.establishments.Add(new Daycare("Jupiter", "Cat"));
+        Establishment.establishments.Add(new Daycare("Uranus", "Cat"));
 
-                break;
-        }
+        Establishment.ChooseAction();
     }
 }
