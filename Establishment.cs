@@ -4,11 +4,19 @@ abstract class Establishment
     public string animal { get; set; }
     public List<Animal> animalsOnSite { get;  set; } = new(); 
     public static List<Establishment> establishments { get; set; } = new List<Establishment>();
+    public static List<Person> people { get; set; } = new List<Person>();
 
     enum DogTypes
     {
         Borzoi,
         GoldenRetriever
+    }
+
+    enum EstablishmentTypes
+    {
+        Hotel,
+        Boarding,
+        Daycare
     }
 
     protected Establishment(string location, string animal)
@@ -19,6 +27,7 @@ abstract class Establishment
 
     public void AppendNewAnimal()
     {
+        Console.Clear();
         switch (animal)
         {
             case "Dog":
@@ -39,6 +48,27 @@ abstract class Establishment
         }
     }
 
+    private void RemoveAnimal()
+    {
+        Console.Clear();
+        foreach(Animal animal in animalsOnSite)
+        {
+            Console.WriteLine($"Animal name: {animal.name}\nAnimal Id: {animal.idNumber}");
+        }
+        while(true)
+        {
+            Console.WriteLine("Please enter the identification number of the animal you wish to remove");
+
+            int searchId = Utils.GetIntFromUser();
+            int animalIndex = animalsOnSite.FindIndex(a => a.idNumber.Equals(searchId));
+
+            if(animalIndex != null)
+            {
+                animalsOnSite.RemoveAt((int)animalIndex);
+            }
+        }
+    }
+
     private static void PrintAllEstablishmentsOfType(string establishmentType)
     {
         Console.WriteLine("-- " + establishmentType + " Locations --");
@@ -50,6 +80,13 @@ abstract class Establishment
             }
         }
     }
+
+    private static void HandlePeopleDatabase()
+    {
+        Console.Clear();
+        Console.WriteLine();
+    }
+
     private void View()
     {
         Console.Clear();
@@ -81,23 +118,47 @@ abstract class Establishment
 
 
         int switchValue = Utils.GetIntFromUser(3);
-        switch(switchValue)
+        while(true)
         {
-            case 1:
-                Console.Clear();
-                Console.WriteLine($"-- Modify Location --\n"
-                + $"Current Location: {location}\n"
-                + $"Please enter new location");
-                location = Utils.GetStringFromUser(true);
-                break;
-            
-            case 2:
-                Console.Clear();
-                Console.WriteLine($"-- Modify Animal Type --\n"
-                + $"Current Animal type: {animal}\n"
-                + $"Please enter new Animal type");
-                animal = Utils.GetStringFromUser(true);
-                break;
+            switch (switchValue)
+            {
+                case 1:
+                    Console.Clear();
+                    Console.WriteLine("-- Modify Location --\n"
+                    + $"Current Location: {location}\n"
+                    + $"Please enter new location");
+                    location = Utils.GetStringFromUser(true);
+                    break;
+
+                case 2:
+                    Console.Clear();
+                    Console.WriteLine("-- Modify Animal Type --\n"
+                    + $"Current Animal type: {animal}\n"
+                    + $"Please enter new Animal type");
+                    animal = Utils.GetStringFromUser(true);
+                    break;
+
+                case 3:
+                    Console.Clear();
+                    Console.WriteLine("-- Modify animals currently housed --\n"
+                    + $"1: Add new animal to establishment"
+                    + $"2: Remove animal from establishment");
+
+                    switch (Utils.GetIntFromUser(2))
+                    {
+                        case 1:
+                            AppendNewAnimal();
+                            break;
+
+                        case 2:
+                            RemoveAnimal();
+                            break;
+                    }
+                    break;
+
+                default:
+                    continue;
+            }
         }
     }
 
@@ -105,10 +166,33 @@ abstract class Establishment
     public static void ChooseAction() {
         while (true)
         {
-            Console.WriteLine("What do you want to do?:");
-            Console.WriteLine("1: View or modify hotels\n"
-            + "2: View or modify daycares\n"
-            + "3: View or modify boardings");
+            while (true)
+            {
+                Console.WriteLine("What do you want to do?:");
+                Console.WriteLine("1: View or modify establishments\n"
+                + "2: View or modify person database");
+
+                switch (Utils.GetIntFromUser(2))
+                {
+                    case 1:
+                        break;
+
+                    case 2:
+                        HandlePeopleDatabase();
+                        break;
+
+                    default:
+                        continue;
+                }
+                break;
+            }
+
+            Console.Clear();
+            Console.WriteLine("Choose an establishment type to view or modify");                            
+            for (int i = 0; i < Enum.GetNames<EstablishmentTypes>().Length; i++)
+            {
+                Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(EstablishmentTypes), i)}");
+            }
 
             while (true)
             {
@@ -118,10 +202,10 @@ abstract class Establishment
                         PrintAllEstablishmentsOfType("Hotel");
                         break;
                     case 2:
-                        PrintAllEstablishmentsOfType("Daycare");
+                        PrintAllEstablishmentsOfType("Boarding");
                         break;
                     case 3:
-                        PrintAllEstablishmentsOfType("Boarding");
+                        PrintAllEstablishmentsOfType("Daycare");
                         break;
                     default:
                         Console.WriteLine("Not a valid input");
@@ -135,7 +219,7 @@ abstract class Establishment
 
             int establishmentIndex;
             establishmentIndex = establishments.FindIndex(a => a.location.Equals(searchLocation));
-            Console.WriteLine("\n 1: View\n 2: Modify");
+            Console.WriteLine("\n1: View\n2: Modify");
 
             switch (Utils.GetIntFromUser(2))
             {
