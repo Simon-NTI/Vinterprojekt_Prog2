@@ -1,8 +1,9 @@
 abstract class Animal
 {
-    private string? furColor, name;
-    private int? idNumber;
-    private Person owner;
+    public string? furColor {get; set; }
+    public string? name { get; set; }
+    public int? idNumber { get; set; }
+    public Person owner { get; set; }
     public Animal(int idNumber, Person owner)
     {
         this.idNumber = idNumber;

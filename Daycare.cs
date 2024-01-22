@@ -4,4 +4,18 @@ class Daycare : Establishment
     {
         
     }
+
+    public void ViewAdditionalInfo()
+    {
+
+    }
+    public void PrintAdditionalInfo()
+    {
+
+    }
+
+    public void ModifyAdditionalInfo()
+    {
+
+    }
 }
