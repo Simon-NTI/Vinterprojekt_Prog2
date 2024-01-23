@@ -48,6 +48,8 @@ class Utils
         }
     }
 
+
+    
     public static string GetStringFromUser(bool allowSpaces)
     {
         while(true)

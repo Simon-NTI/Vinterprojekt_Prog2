@@ -15,6 +15,7 @@ class Program
         Establishment.establishments.Add(new Daycare("Jupiter", "Cat"));
         Establishment.establishments.Add(new Daycare("Uranus", "Cat"));
 
+
         Establishment.ChooseAction();
     }
 }
