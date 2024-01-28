@@ -1,3 +1,6 @@
+/// <summary>
+/// Contains information about Animals of type Cat
+/// </summary>
 abstract class Cat : Animal
 {
     public enum CatTypes

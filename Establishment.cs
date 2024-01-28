@@ -1,3 +1,6 @@
+/// <summary>
+/// Contins all information and methods for handling establishment objects
+/// </summary>
 abstract class Establishment
 {
     public string location { get; set; }
@@ -12,6 +15,11 @@ abstract class Establishment
         Daycare
     }
 
+    //TODO Implement the Staff class into establishment
+
+    /// <summary>
+    /// Constructor, only used in subclasses 
+    /// </summary>
     public Establishment(string location, string animal, List<Animal> animalsOnSite)
     {
         this.location = location;
@@ -80,6 +88,9 @@ abstract class Establishment
         }
     }
 
+    /// <summary>
+    /// Returns a list of all establishment object who's type matches the given one
+    /// </summary>
     private static List<Establishment> GetAllEstablishmentsOfType(string establishmentType)
     {
         List<Establishment> foundEstablishments = new List<Establishment>();
@@ -95,6 +106,9 @@ abstract class Establishment
         return foundEstablishments;
     }
 
+    /// <summary>
+    /// Prints all associated information of the given establishment object
+    /// </summary>
     private void View()
     {
         Console.Clear();
@@ -117,6 +131,10 @@ abstract class Establishment
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
     }
+
+    /// <summary>
+    /// Prompts the user to choose a field to modify, then modifes it according to player input
+    /// </summary>
     private void Modify()
     {
         Console.Clear();
@@ -189,6 +207,9 @@ abstract class Establishment
         }
     }
 
+    /// <summary>
+    /// Takes in numerous inputs from the user and adds a new establishment object to the establishments list
+    /// </summary>
     private static void AddNewEstablishment()
     {
         Console.Clear();
@@ -283,7 +304,6 @@ abstract class Establishment
             Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(EstablishmentTypes), i)}");
         }
 
-
         int input = Utils.GetIntFromUser(Enum.GetNames(typeof(EstablishmentTypes)).Length);
         Console.Clear();
         switch (input)
@@ -306,6 +326,10 @@ abstract class Establishment
         Console.ReadKey();
 
     }
+
+    /// <summary>
+    /// Prints all elements in the establishments list 
+    /// </summary>
     private static void PrintAllEstablishments()
     {
         Console.Clear();
@@ -334,6 +358,10 @@ abstract class Establishment
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
     }
+
+    /// <summary>
+    /// Initial method for this class, is only called once
+    /// </summary>
     public static void ChooseAction() {
         while (true)
         {

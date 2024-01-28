@@ -1,13 +1,17 @@
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-
+/// <summary>
+/// Class for handling and storing data for all derivatives of the animal class
+/// </summary>
 abstract class Animal
 {
     public static List<Animal> animals { get; } = new();
-    public string? furColor {get; }
+    public string furColor {get; }
     public string name { get; }
-    public string id { get; }
+    public string id { get; } // Id is unique for each instance
     public Person owner { get; }
+
+    /// <summary>
+    /// Constructor, only used in subclasses
+    /// </summary>
     public Animal(string id, string name, string furColor , Person owner)
     {
         this.id = id;
@@ -22,6 +26,9 @@ abstract class Animal
         Cat
     }
 
+    /// <summary>
+    /// Inital method for handling animal objects
+    /// </summary>
     public static void HandleAnimalsDatabase()
     {
         Console.Clear();
@@ -56,6 +63,9 @@ abstract class Animal
         }
     }
 
+    /// <summary>
+    /// Prints all fields of all elements in the animals list
+    /// </summary>
     private static void PrintAllAnimals(bool pause)
     {
         Console.Clear();
@@ -82,6 +92,10 @@ abstract class Animal
             Console.Clear();
         }
     }
+
+    /// <summary>
+    /// Prints all fields of animal objects who's name matches the player input
+    /// </summary>
     private static void FindAnimalsWithName()
     {
         List<Animal> foundAnimals = new();
@@ -119,6 +133,11 @@ abstract class Animal
 
    
     //TODO make an overload of this method instead of using null
+
+    /// <summary>
+    /// Prints all fields of an animal object who's id matches the player input
+    /// Can also exclude certaint animal subclasses so long as animalType != null
+    /// </summary>
     public static Animal FindAnimalWithId(string? animalType)
     {
         PrintAllAnimals(false);
@@ -150,6 +169,10 @@ abstract class Animal
             }
         }
     }
+
+    /// <summary>
+    /// Finds and removes an animal object from the animals list given an id
+    /// </summary>
     private static void RemoveAnimal()
     {
         Console.Clear();
@@ -177,6 +200,10 @@ abstract class Animal
             }
         }
     }
+
+    /// <summary>
+    /// Add an instace of an animal object to the animals list according to user specifications
+    /// </summary>
     private static void AddNewAnimal()
     {
         if(Person.people.Count == 0)
@@ -205,6 +232,9 @@ abstract class Animal
         Client owner = Person.FindPersonWithId(true);
 
         Console.Clear();
+
+        //TODO use types better
+        // Uses a series of enums to get subclass type
 
         for (int i = 0; i < Enum.GetNames(typeof(AnimalTypes)).Length; i++)
         {

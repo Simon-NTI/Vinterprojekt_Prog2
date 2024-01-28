@@ -13,6 +13,10 @@ abstract class Person
 
     //TODO a lot of methods in this class resemble methods in the Animal class
     //TODO find a way to make more generic methods if possible
+
+    /// <summary>
+    /// Initial method for handling person objects
+    /// </summary>
     public static void HandlePeopleDatabase()
     {
         Console.Clear();
@@ -49,6 +53,11 @@ abstract class Person
                 break;
         }
     }
+    
+    /// <summary>
+    /// Prints all elements that the people list contains
+    /// Prints additional information of the object is of Client type
+    /// </summary>
     private static void PrintAllPeople(bool pause, bool mustBeClient)
     {
         if(people.Count > 0)
@@ -122,6 +131,10 @@ abstract class Person
             Console.Clear();
         }
     }
+    
+    /// <summary>
+    /// Prints all elements in the people list with the given name
+    /// </summary>
     private static void FindPeopleWithName()
     {
         List<Person> foundPeople = new();
@@ -152,6 +165,10 @@ abstract class Person
             }
         }
     }
+    /// <summary>
+    /// Prints all elements in the people list with the given id
+    /// Allows exclusion of all types not equal to client
+    /// </summary>
     public static Client FindPersonWithId(bool mustBeClient)
     {
         int foundPersonIndex;
@@ -193,6 +210,10 @@ abstract class Person
             }
         }
     }
+   
+   /// <summary>
+   /// Finds and removes a person object from the people list according to the given id
+   /// </summary>
     private static void RemovePerson()
     {
         Console.Clear();
@@ -219,6 +240,10 @@ abstract class Person
             }
         }
     }
+    
+    /// <summary>
+    /// Add a new client
+    /// </summary>
     private static void AddNewClient()
     {
         Console.Clear();
@@ -260,6 +285,9 @@ abstract class Person
         + "1: Yes"
         + "2: No");
 
+
+        // Allows the user to repeatedly add animals to the client object
+        // Does not allow duplicates
         while(true)
         {
             bool shouldContinue = true;
@@ -315,8 +343,12 @@ abstract class Person
 
     }
 
+
+    /// <summary>
+    /// Not in use
+    /// </summary>
     private static void AddNewStaff()
     {
-
+        throw new NotImplementedException();  
     }
 }

@@ -1,3 +1,6 @@
+/// <summary>
+/// Contains information about Animal subclass of type Dog
+/// </summary>
 abstract class Dog : Animal
 {
     public enum DogTypes

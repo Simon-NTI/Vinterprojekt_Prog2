@@ -1,5 +1,9 @@
 ﻿namespace Vinterprojekt_Prog2;
 
+
+/// <summary>
+/// Main method
+/// </summary>
 class Program
 {
     static void Main(string[] args)
