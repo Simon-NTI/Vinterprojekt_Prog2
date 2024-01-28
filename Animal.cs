@@ -1,5 +1,6 @@
 abstract class Animal
 {
+    public List<Animal> animalDatabase { get;  set; } = new();
     public string? furColor {get; set; }
     public string? name { get; set; }
     public int? idNumber { get; set; }
@@ -9,4 +10,6 @@ abstract class Animal
         this.idNumber = idNumber;
         this.owner = owner;
     }
+
+
 }

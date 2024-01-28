@@ -3,13 +3,7 @@ abstract class Establishment
     public string Location { get; set; }
     public string animal { get; set; }
     public List<Animal> animalsOnSite { get;  set; } = new(); 
-    public static List<Establishment> establishments { get; set; } = new List<Establishment>();
-
-    enum DogTypes
-    {
-        Borzoi,
-        GoldenRetriever
-    }
+    public static List<Establishment> establishmentDatabase { get; set; } = new List<Establishment>();
 
     enum EstablishmentTypes
     {
@@ -31,9 +25,9 @@ abstract class Establishment
         {
             case "Dog":
                 Console.WriteLine("--- Choose a dog type ---");
-                for (int i = 0; i < Enum.GetNames<DogTypes>().Length; i++)
+                for (int i = 0; i < Enum.GetNames<Dog.DogTypes>().Length; i++)
                 {
-                    Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(DogTypes), i)}");
+                    Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(Dog.DogTypes), i)}");
                 }
 
                 switch(Utils.GetIntFromUser(1))
@@ -72,7 +66,7 @@ abstract class Establishment
     {
         List<Establishment> foundEstablishments = new List<Establishment>();
         Console.WriteLine("-- " + establishmentType + " Locations --");
-        foreach(Establishment establishment in establishments)
+        foreach(Establishment establishment in establishmentDatabase)
         {
             if (establishment.GetType().ToString() == establishmentType)
             {
@@ -105,14 +99,15 @@ abstract class Establishment
                 + $"- Name: {animal.name}\n"
                 + $"- Fur Color: {animal.furColor}\n"
                 + $"    - Owner Name: {animal.owner.name}");
-
-                Console.WriteLine();
             }
         }
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
     }
     
     private void Modify()
     {
+        Console.Clear();
         Console.WriteLine("Choose one of the following informations to modify:\n"
         + $"1: Location\n"
         + $"2: Type of animal\n"
@@ -151,16 +146,26 @@ abstract class Establishment
                 case 3:
                     Console.Clear();
                     Console.WriteLine("-- Modify animals currently housed --\n"
-                    + $"1: Add new animal to establishment"
+                    + $"1: Add new animal to establishment\n"
                     + $"2: Remove animal from establishment");
 
-                    switch (Utils.GetIntFromUser(2))
+                    int input = Utils.GetIntFromUser(2);
+                    Console.Clear();
+
+                    switch (input)
                     {
                         case 1:
                             AppendNewAnimal();
                             break;
 
                         case 2:
+                            if(animalsOnSite.Count == 0)
+                            {
+                                Console.WriteLine("This establishment does not have any animals");
+                                Console.WriteLine("Press any key to continue...");
+                                Console.ReadKey();
+                                break;
+                            }
                             RemoveAnimal();
                             break;
                     }
@@ -171,8 +176,6 @@ abstract class Establishment
             }
         }
     }
-
-
     public static void ChooseAction() {
         while (true)
         {
@@ -181,7 +184,7 @@ abstract class Establishment
             {
                 bool shouldContinue = true;
                 Console.WriteLine("What do you want to do?:\n"
-                + "1: View or modify establishments\n"
+                + "1: View or modify establishment database\n"
                 + "2: View or modify person database\n"
                 + "3: View or modify animal database\n"
                 + "4: Close application");
@@ -224,7 +227,6 @@ abstract class Establishment
                 Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(EstablishmentTypes), i)}");
             }
 
-            
 
             List<Establishment> foundEstablishments = new List<Establishment>();
             
@@ -234,7 +236,7 @@ abstract class Establishment
 
             while (true)
             {
-                int input = Utils.GetIntFromUser(Enum.GetNames(typeof(EstablishmentTypes)).Length - 1);
+                int input = Utils.GetIntFromUser(Enum.GetNames(typeof(EstablishmentTypes)).Length);
                 Console.Clear();
                 switch (input)
                 {
@@ -254,7 +256,7 @@ abstract class Establishment
 
                 if(foundEstablishments.Count == 0)
                 {
-                    Console.WriteLine("No establishments of this type was found");
+                    Console.WriteLine("No establishmentDatabase of this type was found");
                     continue;
                 }
 
@@ -287,10 +289,10 @@ abstract class Establishment
             switch (Utils.GetIntFromUser(2))
             {
                 case 1:
-                    establishments[establishmentIndex].View();
+                    establishmentDatabase[establishmentIndex].View();
                     break;
                 case 2:
-                    establishments[establishmentIndex].Modify();
+                    establishmentDatabase[establishmentIndex].Modify();
                     break;
             }
         }
