@@ -1,6 +1,6 @@
 class Hotel : Establishment
 {
-    public Hotel(string location, string animal) : base(location, animal)
+    public Hotel(string location, string animal, List<Animal> animalsOnSite) : base(location, animal, animalsOnSite)
     {
 
     }

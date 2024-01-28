@@ -1,6 +1,6 @@
 abstract class Establishment
 {
-    public string Location { get; set; }
+    public string location { get; set; }
     public string animal { get; set; }
     public List<Animal> animalsOnSite { get; set; } = new(); 
     public static List<Establishment> establishments { get; set; } = new List<Establishment>();
@@ -12,17 +12,41 @@ abstract class Establishment
         Daycare
     }
 
-    public Establishment(string Location, string animal)
+    public Establishment(string location, string animal, List<Animal> animalsOnSite)
     {
-        this.Location = Location;
+        this.location = location;
         this.animal = animal;
+        this.animalsOnSite = animalsOnSite;
     }
 
     public void AppendAnimal()
     {
         Console.Clear();
+        if(Animal.animals.Count == 0)
+        {
+            Console.WriteLine("The database is empty\n"
+            + "Press any key to continue...");
+            Console.ReadKey();
+        }
 
-        
+        while(true)
+        {
+            Animal animal = Animal.FindAnimalWithId(this.animal);
+
+            if(animalsOnSite.FindIndex(a => a.id.Equals(animal.id)) != -1)
+            {
+                Console.WriteLine("This animal is already housed here");
+                continue;
+            }
+            else
+            {
+                animalsOnSite.Add(animal);
+                Console.WriteLine("Successfully added animal to establishment\n"
+                + "Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+        }
     }
 
     private void RemoveAnimal()
@@ -30,8 +54,8 @@ abstract class Establishment
         Console.Clear();
         foreach(Animal animal in animalsOnSite)
         {
-            Console.WriteLine($"Animal name: {animal.name}\n"
-            + $"- Animal Id: {animal.id}");
+            Console.WriteLine($"Animal Name: {animal.name}\n"
+            + $"- Animal Id: {animal.id}\n");
         }
         while(true)
         {
@@ -64,7 +88,7 @@ abstract class Establishment
         {
             if (establishment.GetType().ToString() == establishmentType)
             {
-                Console.WriteLine(establishment.Location);
+                Console.WriteLine(establishment.location);
                 foundEstablishments.Add(establishment);
             }
         }
@@ -74,7 +98,7 @@ abstract class Establishment
     private void View()
     {
         Console.Clear();
-        Console.WriteLine($"The establishment Location is {Location}\n"
+        Console.WriteLine($"The establishment location is {location}\n"
         + $"The establishment houses {animal}s\n"
         + $"This establishment currently has {animalsOnSite.Count} animals\n");
         
@@ -97,7 +121,7 @@ abstract class Establishment
     {
         Console.Clear();
         Console.WriteLine("Choose one of the following informations to modify:\n"
-        + $"1: Location\n"
+        + $"1: location\n"
         + $"2: Type of animal\n"
         + $"3: Animals currently housed");
 
@@ -109,12 +133,12 @@ abstract class Establishment
             {
                 case 1:
                     Console.Clear();
-                    Console.WriteLine("-- Modify Location --\n"
-                    + $"Current Location: {Location}\n"
-                    + $"Please enter new Location");
-                    Location = Utils.GetStringFromUser(true);
+                    Console.WriteLine("-- Modify location --\n"
+                    + $"Current location: {location}\n"
+                    + $"Please enter new location");
+                    location = Utils.GetStringFromUser(true);
                     Console.Clear();
-                    Console.WriteLine($"Successfully changed Location to {Location}\n"
+                    Console.WriteLine($"Successfully changed location to {location}\n"
                     + "Press any key to continue...");
                     Console.ReadKey();
                     return;
@@ -164,6 +188,152 @@ abstract class Establishment
             }
         }
     }
+
+    private static void AddNewEstablishment()
+    {
+        Console.Clear();
+        string location = "";
+        while(true)
+        {
+            Console.WriteLine("Enter the location of the establishment");
+            location = Utils.GetStringFromUser(true);
+
+            if(establishments.FindIndex(a => a.location.Equals(location)) == -1)
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("An establishment already exists at this location\n"
+                + "Press any key to continue...");
+                Console.ReadKey();
+            }
+        }
+
+        Console.Clear();
+        Console.WriteLine("What type of animal does this establishment house?");
+        string animalType = Utils.GetStringFromUser(true);
+
+        Console.Clear();
+        List<Animal> animals = new();
+
+        bool addAnimals = true;
+        if(Animal.animals.Count == 0)
+        {
+            addAnimals = false;
+        }
+        else
+        {
+            Console.WriteLine("Add animals to establishment?\n"
+            + "1: Yes"
+            + "2: No");
+        }
+
+        while(addAnimals)
+        {
+            bool shouldContinue = true;
+            switch(Utils.GetIntFromUser(2))
+            {
+                case 1:
+                    Animal animal = Animal.FindAnimalWithId(null);
+                    if(animals.FindIndex(a => a.id.Equals(animal.id)) != -1)
+                    {
+                        Console.WriteLine("This person a already owns this pet");
+                        continue;
+                    }
+                    else
+                    {
+                        animals.Add(animal);
+                    }
+                    break;
+
+                case 2:
+                    shouldContinue = false;
+                    break;
+            }
+
+            if(!shouldContinue)
+            {
+                break;
+            }
+
+            Console.WriteLine("Add another pet?\n"
+            + "1: Yes\n"
+            + "2: No");
+
+            switch(Utils.GetIntFromUser(2))
+            {
+                case 1:
+                    break;
+                
+                case 2:
+                    shouldContinue = false;
+                    break;
+            }
+
+            if(!shouldContinue)
+            {
+                break;
+            }
+        }
+
+        Console.WriteLine("Choose an establishment type");                            
+        for (int i = 0; i < Enum.GetNames<EstablishmentTypes>().Length; i++)
+        {
+            Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(EstablishmentTypes), i)}");
+        }
+
+
+        int input = Utils.GetIntFromUser(Enum.GetNames(typeof(EstablishmentTypes)).Length);
+        Console.Clear();
+        switch (input)
+        {
+            case 1:
+                establishments.Add(new Hotel(location, animalType, animals));
+                break;
+
+            case 2:
+                establishments.Add(new Boarding(location, animalType, animals));
+                break;
+
+            case 3:
+                establishments.Add(new Daycare(location, animalType, animals));
+                break;
+        }
+
+        Console.WriteLine("Successfully added establishment to database\n"
+        + "Press any key to continue...");
+        Console.ReadKey();
+
+    }
+    private static void PrintAllEstablishments()
+    {
+        Console.Clear();
+        foreach(Establishment establishment in establishments)
+        {
+            Console.WriteLine($"Location: {establishment.location}\n"
+            + $"Type: {establishment.GetType()}\n"
+            + $"Animal type: {establishment.animal}");
+
+            if (establishment.animalsOnSite.Count > 0)
+            {
+                foreach (Animal animal in establishment.animalsOnSite)
+                {
+                    Console.WriteLine($"Id: {animal.id}\n"
+                    + $"- Name: {animal.name}\n"
+                    + $"- Fur Color {animal.furColor}\n"
+                    + $"- Owner Name: {animal.owner.name}\n"
+                    + $"- - Owner Id: {animal.owner.id}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("This establishment houses no animals\n");
+            }
+        }
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
+    }
     public static void ChooseAction() {
         while (true)
         {
@@ -172,26 +342,36 @@ abstract class Establishment
                 Console.Clear();
                 bool shouldContinue = true;
                 Console.WriteLine("What do you wish to do?:\n"
-                + "1: View or modify establishment database\n"
-                + "2: View or modify person database\n"
-                + "3: View or modify animal database\n"
-                + "4: Close application");
+                + "1: View or modify existing establishments in database\n"
+                + "2: View all establishments in database\n"
+                + "3: Add establishment to database\n"
+                + "4: View or modify person database\n"
+                + "5: View or modify animal database\n"
+                + "6: Close application");
 
-                switch (Utils.GetIntFromUser(4))
+                switch (Utils.GetIntFromUser(5))
                 {
                     case 1:
                         shouldContinue = false;
                         break;
 
                     case 2:
-                        Person.HandlePeopleDatabase();
+                        PrintAllEstablishments();
                         break;
 
                     case 3:
-                        Animal.HandleAnimalsDatabase();
+                        AddNewEstablishment();
                         break;
 
                     case 4:
+                        Person.HandlePeopleDatabase();
+                        break;
+
+                    case 5:
+                        Animal.HandleAnimalsDatabase();
+                        break;
+
+                    case 6:
                         return;
                 }
 
@@ -249,17 +429,17 @@ abstract class Establishment
             }
 
             int establishmentIndex;
-            Console.WriteLine("Please enter the Location of the establishment you wish to view or modify");
+            Console.WriteLine("Please enter the location of the establishment you wish to view or modify");
 
             while (true)
             {
                 string searchLocation = Utils.GetStringFromUser(true);
-                establishmentIndex = foundEstablishments.FindIndex(a => a.Location.Equals(searchLocation));
+                establishmentIndex = foundEstablishments.FindIndex(a => a.location.Equals(searchLocation));
 
                 if (establishmentIndex == -1)
                 {
-                    Console.WriteLine("An establishment was not found at this Location\n"
-                    + "Please enter a new Location");
+                    Console.WriteLine("An establishment was not found at this location\n"
+                    + "Please enter a new location");
                     continue;
                 }
                 Console.Clear();
@@ -269,15 +449,22 @@ abstract class Establishment
 
             Console.WriteLine("What do you wish to do?\n"
             + "1: View\n"
-            + "2: Modify");
+            + "2: Modify\n"
+            + "3: Remove from database");
 
-            switch (Utils.GetIntFromUser(2))
+            switch (Utils.GetIntFromUser(3))
             {
                 case 1:
                     establishments[establishmentIndex].View();
                     break;
                 case 2:
                     establishments[establishmentIndex].Modify();
+                    break;
+                case 3:
+                    establishments.RemoveAt(establishmentIndex);
+                    Console.WriteLine($"Establishment with location {establishments[establishmentIndex].location} successfully removed from database\n"
+                    + "Press any key to continue...");
+                    Console.ReadKey();
                     break;
             }
         }

@@ -1,7 +1,3 @@
-
-using System.Linq.Expressions;
-using System.Reflection.Metadata;
-
 abstract class Person
 {
     //TODO change properties to reflect actual usage
@@ -53,8 +49,6 @@ abstract class Person
                 break;
         }
     }
-
-    //TODO expand methods to print pet information if the person is of type client
     private static void PrintAllPeople(bool pause, bool mustBeClient)
     {
         if(people.Count > 0)
@@ -67,7 +61,23 @@ abstract class Person
                     {
                         Console.WriteLine($"Name: {person.name}\n"
                         + $"{person.GetType()}\n"
-                        + $"- Id: {person.id}\n");
+                        + $"- Id: {person.id}");
+
+                        Client client = (Client)person;
+                        if(client.pets.Count > 0)
+                        {
+                            Console.WriteLine($"This client has {client.pets.Count} pets");
+                            foreach(Animal pet in client.pets)
+                            {
+                                Console.WriteLine($"Name: {pet.name}\n"
+                                + $"- Id: {pet.name}\n"
+                                + $"- Fur Color {pet.furColor}\n");
+                            }
+                        }
+                        else 
+                        {
+                            Console.WriteLine("This client has no pets\n");
+                        }
                     }
                 }
             }
@@ -78,6 +88,25 @@ abstract class Person
                     Console.WriteLine($"Name: {person.name}\n"
                     + $"{person.GetType()}\n"
                     + $"- Id: {person.id}\n");
+
+                    if(person.GetType().ToString() == "Client")
+                    {
+                        Client client = (Client)person;
+                        if(client.pets.Count > 0)
+                        {
+                            Console.WriteLine($"This client has {client.pets.Count} pets");
+                            foreach(Animal pet in client.pets)
+                            {
+                                Console.WriteLine($"Name: {pet.name}\n"
+                                + $"- Id: {pet.name}\n"
+                                + $"- Fur Color {pet.furColor}\n");
+                            }
+                        }
+                        else 
+                        {
+                            Console.WriteLine("This client has no pets");
+                        }
+                    }
                 }
             }
         }
@@ -231,17 +260,14 @@ abstract class Person
         + "1: Yes"
         + "2: No");
 
-
-        //TODO print all animals in the animal database and let the user choose an animal from the list
-        //TODO check for duplicates before adding it to the pets list
         while(true)
         {
             bool shouldContinue = true;
             switch(Utils.GetIntFromUser(2))
             {
                 case 1:
-                    Animal animal = Animal.FindAnimalWithId();
-                    if(animals.FindIndex(a => a.id.Equals(animal.id)) == -1)
+                    Animal animal = Animal.FindAnimalWithId(null);
+                    if(animals.FindIndex(a => a.id.Equals(animal.id)) != -1)
                     {
                         Console.WriteLine("This person a already owns this pet");
                         continue;
@@ -263,7 +289,7 @@ abstract class Person
             }
 
             Console.WriteLine("Add another pet?\n"
-            + "1: Yes"
+            + "1: Yes\n"
             + "2: No");
 
             switch(Utils.GetIntFromUser(2))

@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 
 abstract class Animal
@@ -38,7 +39,7 @@ abstract class Animal
                 break;
 
             case 2:
-                FindAnimalWithId();
+                FindAnimalWithId(null);
                 break;
 
             case 3:
@@ -115,17 +116,20 @@ abstract class Animal
             }
         }
     }
-    public static Animal FindAnimalWithId()
+
+   
+    //TODO make an overload of this method instead of using null
+    public static Animal FindAnimalWithId(string? animalType)
     {
+        PrintAllAnimals(false);
         int foundAnimalIndex;
         while (true)
         {
-            Console.Clear();
             Console.WriteLine("Enter an id to search for:");
             string idToSearch = Utils.GetStringFromUser(false);
-            foundAnimalIndex = animals.FindIndex(a => a.name.Equals(idToSearch));
+            foundAnimalIndex = animals.FindIndex(a => a.id.Equals(idToSearch));
 
-            if (foundAnimalIndex != -1)
+            if (foundAnimalIndex != -1 && (animalType == animals[foundAnimalIndex].GetType().ToString() || animalType == null))
             {
                 Console.WriteLine($"Successfully found animal with Id {idToSearch}\n"
                 + $"- Name: {animals[foundAnimalIndex].name}\n"
