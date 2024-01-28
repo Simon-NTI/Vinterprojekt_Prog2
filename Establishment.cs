@@ -2,8 +2,8 @@ abstract class Establishment
 {
     public string Location { get; set; }
     public string animal { get; set; }
-    public List<Animal> animalsOnSite { get;  set; } = new(); 
-    public static List<Establishment> establishmentDatabase { get; set; } = new List<Establishment>();
+    public List<Animal> animalsOnSite { get; set; } = new(); 
+    public static List<Establishment> establishments { get; set; } = new List<Establishment>();
 
     enum EstablishmentTypes
     {
@@ -12,33 +12,17 @@ abstract class Establishment
         Daycare
     }
 
-    protected Establishment(string Location, string animal)
+    public Establishment(string Location, string animal)
     {
         this.Location = Location;
         this.animal = animal;
     }
 
-    public void AppendNewAnimal()
+    public void AppendAnimal()
     {
         Console.Clear();
-        switch (animal)
-        {
-            case "Dog":
-                Console.WriteLine("--- Choose a dog type ---");
-                for (int i = 0; i < Enum.GetNames<Dog.DogTypes>().Length; i++)
-                {
-                    Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(Dog.DogTypes), i)}");
-                }
 
-                switch(Utils.GetIntFromUser(1))
-                {
-                    case 1:
-                        //animalsOnSite.Add(new Borzoi(60));
-                        break;
-                }
-
-                break;
-        }
+        
     }
 
     private void RemoveAnimal()
@@ -46,18 +30,28 @@ abstract class Establishment
         Console.Clear();
         foreach(Animal animal in animalsOnSite)
         {
-            Console.WriteLine($"Animal name: {animal.name}\nAnimal Id: {animal.idNumber}");
+            Console.WriteLine($"Animal name: {animal.name}\n"
+            + $"- Animal Id: {animal.id}");
         }
         while(true)
         {
             Console.WriteLine("Please enter the identification number of the animal you wish to remove");
 
-            int searchId = Utils.GetIntFromUser();
-            int animalIndex = animalsOnSite.FindIndex(a => a.idNumber.Equals(searchId));
+            string searchId = Utils.GetStringFromUser(false);
+            int animalIndex = animalsOnSite.FindIndex(a => a.id.Equals(searchId));
 
-            if(animalIndex != null)
+            if(animalIndex != -1)
             {
-                animalsOnSite.RemoveAt((int)animalIndex);
+                animalsOnSite.RemoveAt(animalIndex);
+                Console.WriteLine($"Successfully removed animal with id {searchId}");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
+            }
+            else
+            {
+                Console.WriteLine("No animal with this id was found");
+                continue;
             }
         }
     }
@@ -66,7 +60,7 @@ abstract class Establishment
     {
         List<Establishment> foundEstablishments = new List<Establishment>();
         Console.WriteLine("-- " + establishmentType + " Locations --");
-        foreach(Establishment establishment in establishmentDatabase)
+        foreach(Establishment establishment in establishments)
         {
             if (establishment.GetType().ToString() == establishmentType)
             {
@@ -75,12 +69,6 @@ abstract class Establishment
             }
         }
         return foundEstablishments;
-    }
-
-    private static void HandlePeopleDatabase()
-    {
-        Console.Clear();
-        Console.WriteLine();
     }
 
     private void View()
@@ -95,16 +83,16 @@ abstract class Establishment
             Console.WriteLine("--- List of animals ---");
             foreach(Animal animal in animalsOnSite)
             {
-                Console.WriteLine($"Animal Id: {animal.idNumber}\n"
+                Console.WriteLine($"Animal Id: {animal.id}\n"
                 + $"- Name: {animal.name}\n"
                 + $"- Fur Color: {animal.furColor}\n"
-                + $"    - Owner Name: {animal.owner.name}");
+                + $"- Owner Name: {animal.owner.name}\n"
+                + $"- - Owner Id: {animal.owner.id}\n");
             }
         }
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
     }
-    
     private void Modify()
     {
         Console.Clear();
@@ -155,7 +143,7 @@ abstract class Establishment
                     switch (input)
                     {
                         case 1:
-                            AppendNewAnimal();
+                            AppendAnimal();
                             break;
 
                         case 2:
@@ -179,11 +167,11 @@ abstract class Establishment
     public static void ChooseAction() {
         while (true)
         {
-            Console.Clear();
             while (true)
             {
+                Console.Clear();
                 bool shouldContinue = true;
-                Console.WriteLine("What do you want to do?:\n"
+                Console.WriteLine("What do you wish to do?:\n"
                 + "1: View or modify establishment database\n"
                 + "2: View or modify person database\n"
                 + "3: View or modify animal database\n"
@@ -196,18 +184,15 @@ abstract class Establishment
                         break;
 
                     case 2:
-                        HandlePeopleDatabase();
+                        Person.HandlePeopleDatabase();
                         break;
 
                     case 3:
+                        Animal.HandleAnimalsDatabase();
                         break;
 
                     case 4:
                         return;
-
-                    default:
-                        Console.WriteLine("Not a valid option");
-                        continue;
                 }
 
                 if(shouldContinue)
@@ -256,7 +241,7 @@ abstract class Establishment
 
                 if(foundEstablishments.Count == 0)
                 {
-                    Console.WriteLine("No establishmentDatabase of this type was found");
+                    Console.WriteLine("No establishment of this type was found");
                     continue;
                 }
 
@@ -289,10 +274,10 @@ abstract class Establishment
             switch (Utils.GetIntFromUser(2))
             {
                 case 1:
-                    establishmentDatabase[establishmentIndex].View();
+                    establishments[establishmentIndex].View();
                     break;
                 case 2:
-                    establishmentDatabase[establishmentIndex].Modify();
+                    establishments[establishmentIndex].Modify();
                     break;
             }
         }

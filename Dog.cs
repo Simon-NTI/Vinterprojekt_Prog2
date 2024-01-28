@@ -2,10 +2,10 @@ abstract class Dog : Animal
 {
     public enum DogTypes
     {
-        Borzoi,
-        GoldenRetriever
+        RedDog,
+        YellowDog
     }
-    public Dog(int idNumber, Person owner) : base(idNumber, owner)
+    public Dog(string id, string name, string furColor, Person owner) : base(id, name, furColor, owner)
     {
 
     }

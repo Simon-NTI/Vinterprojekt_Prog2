@@ -1,7 +1,12 @@
 abstract class Cat : Animal
 {
-    public Cat(Person owner, int idNumber) : base(idNumber, owner)
+    public enum CatTypes
     {
-        
+        OrangeCat,
+        PurpleCat
+    }
+    public Cat(string id, string name, string furColor, Person owner) : base(id, name, furColor, owner)
+    {
+
     }
 }

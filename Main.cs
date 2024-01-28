@@ -1,6 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Vinterprojekt_Prog2;
+﻿namespace Vinterprojekt_Prog2;
 
 class Program
 {
@@ -15,6 +13,9 @@ class Program
         Establishment.establishments.Add(new Daycare("Jupiter", "Cat"));
         Establishment.establishments.Add(new Daycare("Uranus", "Cat"));
 
+        Person.people.Add(new Client("Jeff", "15", new()));
+        Person.people.Add(new Client("Bill", "22", new()));
+        Person.people.Add(new Staff("Colt", "17"));
 
         Establishment.ChooseAction();
     }
