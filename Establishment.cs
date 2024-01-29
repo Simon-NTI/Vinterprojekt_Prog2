@@ -246,7 +246,7 @@ abstract class Establishment
         else
         {
             Console.WriteLine("Add animals to establishment?\n"
-            + "1: Yes"
+            + "1: Yes\n"
             + "2: No");
         }
 
@@ -341,13 +341,14 @@ abstract class Establishment
 
             if (establishment.animalsOnSite.Count > 0)
             {
+                Console.WriteLine($"This establishment has {establishment.animalsOnSite.Count} animal(s)");
                 foreach (Animal animal in establishment.animalsOnSite)
                 {
-                    Console.WriteLine($"Id: {animal.id}\n"
-                    + $"- Name: {animal.name}\n"
-                    + $"- Fur Color {animal.furColor}\n"
-                    + $"- Owner Name: {animal.owner.name}\n"
-                    + $"- - Owner Id: {animal.owner.id}");
+                    Console.WriteLine($"- Id: {animal.id}\n"
+                    + $"- - Name: {animal.name}\n"
+                    + $"- - Fur Color {animal.furColor}\n"
+                    + $"- - Owner Name: {animal.owner.name}\n"
+                    + $"- - - Owner Id: {animal.owner.id}\n");
                 }
             }
             else
@@ -377,7 +378,7 @@ abstract class Establishment
                 + "5: View or modify animal database\n"
                 + "6: Close application");
 
-                switch (Utils.GetIntFromUser(5))
+                switch (Utils.GetIntFromUser(6))
                 {
                     case 1:
                         shouldContinue = false;

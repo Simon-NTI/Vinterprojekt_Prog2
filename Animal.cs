@@ -75,6 +75,7 @@ abstract class Animal
             {
                 Console.WriteLine($"Id: {animal.id}\n"
                 + $"- Name: {animal.name}\n"
+                + $"- Type: {animal.GetType()}\n"
                 + $"- Fur Color: {animal.furColor}\n"
                 + $"- Owner Name: {animal.owner.name}\n"
                 + $"- - Owner Id: {animal.owner.id}\n");
@@ -138,6 +139,8 @@ abstract class Animal
     /// Prints all fields of an animal object who's id matches the player input
     /// Can also exclude certaint animal subclasses so long as animalType != null
     /// </summary>
+    /// 
+    //TODO this method does no support sub-types of animals
     public static Animal FindAnimalWithId(string? animalType)
     {
         PrintAllAnimals(false);
@@ -148,7 +151,7 @@ abstract class Animal
             string idToSearch = Utils.GetStringFromUser(false);
             foundAnimalIndex = animals.FindIndex(a => a.id.Equals(idToSearch));
 
-            if (foundAnimalIndex != -1 && (animalType == animals[foundAnimalIndex].GetType().ToString() || animalType == null))
+            if (foundAnimalIndex != -1) // && (animalType == animals[foundAnimalIndex].GetType().ToString() || animalType == null)
             {
                 Console.WriteLine($"Successfully found animal with Id {idToSearch}\n"
                 + $"- Name: {animals[foundAnimalIndex].name}\n"
@@ -177,6 +180,13 @@ abstract class Animal
     {
         Console.Clear();
         PrintAllAnimals(false);
+
+        if(animals.Count == 0)
+        {
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return;
+        }
 
         while(true)
         {

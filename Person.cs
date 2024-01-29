@@ -75,11 +75,11 @@ abstract class Person
                         Client client = (Client)person;
                         if(client.pets.Count > 0)
                         {
-                            Console.WriteLine($"This client has {client.pets.Count} pets");
+                            Console.WriteLine($"This client has {client.pets.Count} pet(s)");
                             foreach(Animal pet in client.pets)
                             {
                                 Console.WriteLine($"Name: {pet.name}\n"
-                                + $"- Id: {pet.name}\n"
+                                + $"- Id: {pet.id}\n"
                                 + $"- Fur Color {pet.furColor}\n");
                             }
                         }
@@ -96,24 +96,24 @@ abstract class Person
                 {
                     Console.WriteLine($"Name: {person.name}\n"
                     + $"{person.GetType()}\n"
-                    + $"- Id: {person.id}\n");
+                    + $"- Id: {person.id}");
 
                     if(person.GetType().ToString() == "Client")
                     {
                         Client client = (Client)person;
                         if(client.pets.Count > 0)
                         {
-                            Console.WriteLine($"This client has {client.pets.Count} pets");
+                            Console.WriteLine($"This client has {client.pets.Count} pet(s)");
                             foreach(Animal pet in client.pets)
                             {
                                 Console.WriteLine($"Name: {pet.name}\n"
-                                + $"- Id: {pet.name}\n"
+                                + $"- Id: {pet.id}\n"
                                 + $"- Fur Color {pet.furColor}\n");
                             }
                         }
                         else 
                         {
-                            Console.WriteLine("This client has no pets");
+                            Console.WriteLine("This client has no pets\n");
                         }
                     }
                 }
@@ -270,71 +270,6 @@ abstract class Person
 
         Console.Clear();
         List<Animal> animals = new();
-
-        if(Animal.animals.Count == 0)
-        {
-            Console.Clear();
-            people.Add(new Client(name, id, animals));
-            Console.WriteLine("Successfully added client to database\n"
-            + "Press any key to continue...");
-            Console.ReadKey();
-            return;
-        }
-
-        Console.WriteLine("Does the client have pets?\n"
-        + "1: Yes"
-        + "2: No");
-
-
-        // Allows the user to repeatedly add animals to the client object
-        // Does not allow duplicates
-        while(true)
-        {
-            bool shouldContinue = true;
-            switch(Utils.GetIntFromUser(2))
-            {
-                case 1:
-                    Animal animal = Animal.FindAnimalWithId(null);
-                    if(animals.FindIndex(a => a.id.Equals(animal.id)) != -1)
-                    {
-                        Console.WriteLine("This person a already owns this pet");
-                        continue;
-                    }
-                    else
-                    {
-                        animals.Add(animal);
-                    }
-                    break;
-
-                case 2:
-                    shouldContinue = false;
-                    break;
-            }
-
-            if(!shouldContinue)
-            {
-                break;
-            }
-
-            Console.WriteLine("Add another pet?\n"
-            + "1: Yes\n"
-            + "2: No");
-
-            switch(Utils.GetIntFromUser(2))
-            {
-                case 1:
-                    break;
-                
-                case 2:
-                    shouldContinue = false;
-                    break;
-            }
-
-            if(!shouldContinue)
-            {
-                break;
-            }
-        }
 
         Console.Clear();
         people.Add(new Client(name, id, animals));
