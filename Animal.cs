@@ -132,15 +132,13 @@ abstract class Animal
         }
     }
 
-   
-    //TODO make an overload of this method instead of using null
-
     /// <summary>
     /// Prints all fields of an animal object who's id matches the player input
     /// Can also exclude certaint animal subclasses so long as animalType != null
     /// </summary>
     /// 
-    //TODO this method does no support sub-types of animals
+    //TODO make an overload of this method instead of using null
+    //TODO this method does not support sub-types of animals
     public static Animal FindAnimalWithId(string? animalType)
     {
         PrintAllAnimals(false);

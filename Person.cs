@@ -269,18 +269,16 @@ abstract class Person
         }
 
         Console.Clear();
-        List<Animal> animals = new();
 
         Console.Clear();
-        people.Add(new Client(name, id, animals));
+        people.Add(new Client(name, id));
         Console.WriteLine("Successfully added client to database");
-
-
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
     }
 
-
     /// <summary>
-    /// Not in use
+    /// Not implemented
     /// </summary>
     private static void AddNewStaff()
     {

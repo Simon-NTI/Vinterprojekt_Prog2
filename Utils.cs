@@ -33,7 +33,6 @@ class Utils
             string? input = Console.ReadLine();
             if(int.TryParse(input, out int result))
             {
-
                 if(result < 1)
                 {
                     Console.WriteLine("Input must be larger than 0");

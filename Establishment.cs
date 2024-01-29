@@ -5,7 +5,7 @@ abstract class Establishment
 {
     public string location { get; set; }
     public string animal { get; set; }
-    public List<Animal> animalsOnSite { get; set; } = new(); 
+    public List<Animal> animalsOnSite { get; } = new(); 
     public static List<Establishment> establishments { get; set; } = new List<Establishment>();
 
     enum EstablishmentTypes
@@ -338,6 +338,7 @@ abstract class Establishment
             Console.WriteLine($"Location: {establishment.location}\n"
             + $"Type: {establishment.GetType()}\n"
             + $"Animal type: {establishment.animal}");
+            Console.WriteLine(establishments.FindIndex(a => a.location.Equals(establishment.location)));
 
             if (establishment.animalsOnSite.Count > 0)
             {
@@ -346,7 +347,7 @@ abstract class Establishment
                 {
                     Console.WriteLine($"- Id: {animal.id}\n"
                     + $"- - Name: {animal.name}\n"
-                    + $"- - Fur Color {animal.furColor}\n"
+                    + $"- - Fur Color: {animal.furColor}\n"
                     + $"- - Owner Name: {animal.owner.name}\n"
                     + $"- - - Owner Id: {animal.owner.id}\n");
                 }
@@ -457,13 +458,17 @@ abstract class Establishment
                 break;
             }
 
+
+
             int establishmentIndex;
             Console.WriteLine("Please enter the location of the establishment you wish to view or modify");
 
             while (true)
             {
                 string searchLocation = Utils.GetStringFromUser(true);
+                // TODO this always results in zero
                 establishmentIndex = foundEstablishments.FindIndex(a => a.location.Equals(searchLocation));
+                Console.WriteLine($"Index: {establishmentIndex}");
 
                 if (establishmentIndex == -1)
                 {
@@ -471,8 +476,10 @@ abstract class Establishment
                     + "Please enter a new location");
                     continue;
                 }
-                Console.Clear();
+                //Console.Clear();
                 Console.WriteLine($"Establishment successfully found at {searchLocation}");
+                Console.WriteLine($"Establishment2 successfully found at {establishments[establishmentIndex].location}");
+                Console.WriteLine($"Id: {establishmentIndex}");
                 break;
             }
 
@@ -490,9 +497,11 @@ abstract class Establishment
                     establishments[establishmentIndex].Modify();
                     break;
                 case 3:
-                    establishments.RemoveAt(establishmentIndex);
+                    // TODO this does not remove the correct index of the establishment list, fix it
+                    Console.WriteLine($"Id: {establishmentIndex}");
                     Console.WriteLine($"Establishment with location {establishments[establishmentIndex].location} successfully removed from database\n"
                     + "Press any key to continue...");
+                    establishments.RemoveAt(establishmentIndex);
                     Console.ReadKey();
                     break;
             }

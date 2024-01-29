@@ -13,8 +13,8 @@ class Program
 
         Establishment.establishments.Add(new Daycare("Jupiter", "Cat", new()));
 
-        Person.people.Add(new Client("Jeff", "15", new()));
-        Person.people.Add(new Client("Bill", "22", new()));
+        Person.people.Add(new Client("Jeff", "15"));
+        Person.people.Add(new Client("Bill", "22"));
         Person.people.Add(new Staff("Colt", "17"));
 
         Establishment.ChooseAction();
