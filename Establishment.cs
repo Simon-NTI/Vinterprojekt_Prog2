@@ -27,6 +27,11 @@ abstract class Establishment
         this.animalsOnSite = animalsOnSite;
     }
 
+    /// <summary>
+    /// Prompts the user to add an animal to the establishment
+    /// </summary>
+    
+    //TODO This method should only accept animals whose type matches the given type of the establishment
     public void AppendAnimal()
     {
         Console.Clear();
@@ -57,6 +62,9 @@ abstract class Establishment
         }
     }
 
+    /// <summary>
+    /// Prompts the user to remove an animal from the establishment
+    /// </summary>
     private void RemoveAnimal()
     {
         Console.Clear();
@@ -69,7 +77,7 @@ abstract class Establishment
         {
             Console.WriteLine("Please enter the identification number of the animal you wish to remove");
 
-            string searchId = Utils.GetStringFromUser(false);
+            string searchId = IUtils.GetStringFromUser(false);
             int animalIndex = animalsOnSite.FindIndex(a => a.id.Equals(searchId));
 
             if(animalIndex != -1)
@@ -144,7 +152,7 @@ abstract class Establishment
         + $"3: Animals currently housed");
 
 
-        int switchValue = Utils.GetIntFromUser(3);
+        int switchValue = IUtils.GetIntFromUser(3);
         while(true)
         {
             switch (switchValue)
@@ -154,7 +162,7 @@ abstract class Establishment
                     Console.WriteLine("-- Modify location --\n"
                     + $"Current location: {location}\n"
                     + $"Please enter new location");
-                    location = Utils.GetStringFromUser(true);
+                    location = IUtils.GetStringFromUser(true);
                     Console.Clear();
                     Console.WriteLine($"Successfully changed location to {location}\n"
                     + "Press any key to continue...");
@@ -166,7 +174,7 @@ abstract class Establishment
                     Console.WriteLine("-- Modify Animal Type --\n"
                     + $"Current Animal type: {animal}\n"
                     + $"Please enter new Animal type");
-                    animal = Utils.GetStringFromUser(true);
+                    animal = IUtils.GetStringFromUser(true);
                     Console.Clear();
                     Console.WriteLine($"Successfully changed animal type to {animal}\n"
                     + "Press any key to continue...");
@@ -179,7 +187,7 @@ abstract class Establishment
                     + $"1: Add new animal to establishment\n"
                     + $"2: Remove animal from establishment");
 
-                    int input = Utils.GetIntFromUser(2);
+                    int input = IUtils.GetIntFromUser(2);
                     Console.Clear();
 
                     switch (input)
@@ -217,7 +225,7 @@ abstract class Establishment
         while(true)
         {
             Console.WriteLine("Enter the location of the establishment");
-            location = Utils.GetStringFromUser(true);
+            location = IUtils.GetStringFromUser(true);
 
             if(establishments.FindIndex(a => a.location.Equals(location)) == -1)
             {
@@ -233,7 +241,9 @@ abstract class Establishment
 
         Console.Clear();
         Console.WriteLine("What type of animal does this establishment house?");
-        string animalType = Utils.GetStringFromUser(true);
+
+        //TODO check against the animalTypes enum to make sure the given type actually exists
+        string animalType = IUtils.GetStringFromUser(true);
 
         Console.Clear();
         List<Animal> animals = new();
@@ -253,7 +263,7 @@ abstract class Establishment
         while(addAnimals)
         {
             bool shouldContinue = true;
-            switch(Utils.GetIntFromUser(2))
+            switch(IUtils.GetIntFromUser(2))
             {
                 case 1:
                     Animal animal = Animal.FindAnimalWithId(null);
@@ -282,7 +292,7 @@ abstract class Establishment
             + "1: Yes\n"
             + "2: No");
 
-            switch(Utils.GetIntFromUser(2))
+            switch(IUtils.GetIntFromUser(2))
             {
                 case 1:
                     break;
@@ -304,7 +314,7 @@ abstract class Establishment
             Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(EstablishmentTypes), i)}");
         }
 
-        int input = Utils.GetIntFromUser(Enum.GetNames(typeof(EstablishmentTypes)).Length);
+        int input = IUtils.GetIntFromUser(Enum.GetNames(typeof(EstablishmentTypes)).Length);
         Console.Clear();
         switch (input)
         {
@@ -338,7 +348,6 @@ abstract class Establishment
             Console.WriteLine($"Location: {establishment.location}\n"
             + $"Type: {establishment.GetType()}\n"
             + $"Animal type: {establishment.animal}");
-            Console.WriteLine(establishments.FindIndex(a => a.location.Equals(establishment.location)));
 
             if (establishment.animalsOnSite.Count > 0)
             {
@@ -379,7 +388,7 @@ abstract class Establishment
                 + "5: View or modify animal database\n"
                 + "6: Close application");
 
-                switch (Utils.GetIntFromUser(6))
+                switch (IUtils.GetIntFromUser(6))
                 {
                     case 1:
                         shouldContinue = false;
@@ -423,15 +432,13 @@ abstract class Establishment
             }
 
 
-            List<Establishment> foundEstablishments = new List<Establishment>();
-            
-
             //TODO instead of manually writing a case for every establishment type,
             //TODO use the EstablishmentTypes enum to generate cases instead
 
+            List<Establishment> foundEstablishments = new List<Establishment>();
             while (true)
             {
-                int input = Utils.GetIntFromUser(Enum.GetNames(typeof(EstablishmentTypes)).Length);
+                int input = IUtils.GetIntFromUser(Enum.GetNames(typeof(EstablishmentTypes)).Length);
                 Console.Clear();
                 switch (input)
                 {
@@ -465,21 +472,17 @@ abstract class Establishment
 
             while (true)
             {
-                string searchLocation = Utils.GetStringFromUser(true);
-                // TODO this always results in zero
+                string searchLocation = IUtils.GetStringFromUser(true);
                 establishmentIndex = foundEstablishments.FindIndex(a => a.location.Equals(searchLocation));
-                Console.WriteLine($"Index: {establishmentIndex}");
-
                 if (establishmentIndex == -1)
                 {
                     Console.WriteLine("An establishment was not found at this location\n"
                     + "Please enter a new location");
                     continue;
                 }
-                //Console.Clear();
+                establishmentIndex = establishments.FindIndex(a => a.location.Equals(searchLocation));
+                Console.Clear();
                 Console.WriteLine($"Establishment successfully found at {searchLocation}");
-                Console.WriteLine($"Establishment2 successfully found at {establishments[establishmentIndex].location}");
-                Console.WriteLine($"Id: {establishmentIndex}");
                 break;
             }
 
@@ -488,7 +491,7 @@ abstract class Establishment
             + "2: Modify\n"
             + "3: Remove from database");
 
-            switch (Utils.GetIntFromUser(3))
+            switch (IUtils.GetIntFromUser(3))
             {
                 case 1:
                     establishments[establishmentIndex].View();
@@ -497,8 +500,6 @@ abstract class Establishment
                     establishments[establishmentIndex].Modify();
                     break;
                 case 3:
-                    // TODO this does not remove the correct index of the establishment list, fix it
-                    Console.WriteLine($"Id: {establishmentIndex}");
                     Console.WriteLine($"Establishment with location {establishments[establishmentIndex].location} successfully removed from database\n"
                     + "Press any key to continue...");
                     establishments.RemoveAt(establishmentIndex);

@@ -6,7 +6,7 @@ abstract class Animal
     public static List<Animal> animals { get; } = new();
     public string furColor {get; }
     public string name { get; }
-    public string id { get; } // Id is unique for each instance
+    public string id { get; } // Id is unique for each instance of this class
     public Person owner { get; }
 
     /// <summary>
@@ -39,7 +39,7 @@ abstract class Animal
         + "4: Remove an animal from the database\n"
         + "5: Add an animal to the database");
 
-        switch(Utils.GetIntFromUser(5))
+        switch(IUtils.GetIntFromUser(5))
         {
             case 1:
                 FindAnimalsWithName();
@@ -104,7 +104,7 @@ abstract class Animal
         {
             Console.Clear();
             Console.WriteLine("Enter a name to search for:");
-            string nameToSearch = Utils.GetStringFromUser(true);
+            string nameToSearch = IUtils.GetStringFromUser(true);
             foundAnimals = animals.FindAll(a => a.name.Equals(nameToSearch));
 
             if (foundAnimals.Count > 0)
@@ -146,7 +146,7 @@ abstract class Animal
         while (true)
         {
             Console.WriteLine("Enter an id to search for:");
-            string idToSearch = Utils.GetStringFromUser(false);
+            string idToSearch = IUtils.GetStringFromUser(false);
             foundAnimalIndex = animals.FindIndex(a => a.id.Equals(idToSearch));
 
             if (foundAnimalIndex != -1) // && (animalType == animals[foundAnimalIndex].GetType().ToString() || animalType == null)
@@ -190,7 +190,7 @@ abstract class Animal
         {
             Console.WriteLine("Please enter the identification number of the animal you wish to remove");
 
-            string searchId = Utils.GetStringFromUser(false);
+            string searchId = IUtils.GetStringFromUser(false);
             int animalIndex = animals.FindIndex(a => a.id.Equals(searchId));
 
             if(animalIndex != -1)
@@ -225,15 +225,15 @@ abstract class Animal
 
         Console.Clear();
         Console.WriteLine("Enter the name of the animal");
-        string name = Utils.GetStringFromUser(true);
+        string name = IUtils.GetStringFromUser(true);
 
         Console.Clear();
         Console.WriteLine("Enter the id of the animal");
-        string id = Utils.GetStringFromUser(false);
+        string id = IUtils.GetStringFromUser(false);
 
         Console.Clear();
         Console.WriteLine("Enter the fur color of the animal");
-        string furColor = Utils.GetStringFromUser(false);
+        string furColor = IUtils.GetStringFromUser(false);
 
         Console.Clear();
         Console.WriteLine("Add an owner");
@@ -250,7 +250,7 @@ abstract class Animal
         }
         Console.WriteLine("Choose an animal type");
 
-        switch(Enum.GetName(typeof(AnimalTypes), Utils.GetIntFromUser(Enum.GetNames(typeof(AnimalTypes)).Length) - 1).ToString())
+        switch(Enum.GetName(typeof(AnimalTypes), IUtils.GetIntFromUser(Enum.GetNames(typeof(AnimalTypes)).Length) - 1).ToString())
         {
             case "Dog":
                 Console.Clear();
@@ -258,7 +258,7 @@ abstract class Animal
                 {
                     Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(Dog.DogTypes), i)}");
                 }
-                switch(Enum.GetName(typeof(Dog.DogTypes), Utils.GetIntFromUser(Enum.GetNames(typeof(Dog.DogTypes)).Length) - 1).ToString())
+                switch(Enum.GetName(typeof(Dog.DogTypes), IUtils.GetIntFromUser(Enum.GetNames(typeof(Dog.DogTypes)).Length) - 1).ToString())
                 {
                     case "RedDog":
                         animals.Add(new RedDog(id, name, furColor, owner));
@@ -276,7 +276,7 @@ abstract class Animal
                 {
                     Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(Cat.CatTypes), i)}");
                 }
-                switch(Enum.GetName(typeof(Cat.CatTypes), Utils.GetIntFromUser(Enum.GetNames(typeof(Cat.CatTypes)).Length) - 1).ToString())
+                switch(Enum.GetName(typeof(Cat.CatTypes), IUtils.GetIntFromUser(Enum.GetNames(typeof(Cat.CatTypes)).Length) - 1).ToString())
                 {
                     case "OrangeCat":
                         animals.Add(new OrangeCat(id, name, furColor, owner));
@@ -297,4 +297,9 @@ abstract class Animal
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
     }
+
+    /// <summary>
+    /// Meow
+    /// </summary>
+    public abstract void MakeSound();
 }

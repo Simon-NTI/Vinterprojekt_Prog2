@@ -1,5 +1,11 @@
-class Utils
+/// <summary>
+/// Interface containing methods for general functionality
+/// </summary>
+interface IUtils
 {
+    /// <summary>
+    /// Retrieves an integer from the user that is greater than 0 but less than the given parameter
+    /// </summary>
     public static int GetIntFromUser(int largestPossibleInt)
     {
         while (true)
@@ -26,6 +32,9 @@ class Utils
         }
     }
 
+    /// <summary>
+    /// Retrieves an integer from the user that is greater than 0
+    /// </summary>
     public static int GetIntFromUser()
     {
         while (true)
@@ -48,7 +57,9 @@ class Utils
     }
 
 
-    
+    /// <summary>
+    /// Retrieves a string from the user which may or may not contain spaces
+    /// </summary>
     public static string GetStringFromUser(bool allowSpaces)
     {
         while(true)

@@ -7,4 +7,8 @@ class PurpleCat : Cat
     {
         
     }
+    public override void MakeSound()
+    {
+        Console.WriteLine("Meow");
+    }
 }

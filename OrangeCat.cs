@@ -7,4 +7,9 @@ class OrangeCat : Cat
     {
         
     }
+
+    public override void MakeSound()
+    {
+        Console.WriteLine("Meow meow");
+    }
 }

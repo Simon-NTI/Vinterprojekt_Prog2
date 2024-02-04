@@ -1,7 +1,5 @@
 abstract class Person
 {
-    //TODO change properties to reflect actual usage
-    //TODO i.e remove set property from all fields that do not use it
     public static List<Person> people { get; set; } = new();
     public string name { get; set; }
     public string id { get; set; }
@@ -28,7 +26,7 @@ abstract class Person
         + "5: Add a client to the database\n"
         + "6: Add a staff to the database");
 
-        switch(Utils.GetIntFromUser(6))
+        switch(IUtils.GetIntFromUser(6))
         {
             case 1:
                 FindPeopleWithName();
@@ -142,7 +140,7 @@ abstract class Person
         {
             Console.Clear();
             Console.WriteLine("Enter a name to search for:");
-            string nameToSearch = Utils.GetStringFromUser(true);
+            string nameToSearch = IUtils.GetStringFromUser(true);
             foundPeople = people.FindAll(a => a.name.Equals(nameToSearch));
 
             if (foundPeople.Count > 0)
@@ -183,7 +181,7 @@ abstract class Person
                 PrintAllPeople(false, false);
             }
             Console.WriteLine("Enter an id to search for:");
-            string idToSearch = Utils.GetStringFromUser(false);
+            string idToSearch = IUtils.GetStringFromUser(false);
             foundPersonIndex = people.FindIndex(a => a.id.Equals(idToSearch));
 
             if(mustBeClient && foundPersonIndex != -1)
@@ -222,7 +220,7 @@ abstract class Person
         while(true)
         {
             Console.WriteLine("Please enter the identification number of the person you wish to remove");
-            string searchId = Utils.GetStringFromUser(false);
+            string searchId = IUtils.GetStringFromUser(false);
             int personIndex = people.FindIndex(a => a.id.Equals(searchId));
 
             if(personIndex != -1)
@@ -248,14 +246,14 @@ abstract class Person
     {
         Console.Clear();
         Console.WriteLine("Enter the name of the client");
-        string name = Utils.GetStringFromUser(true);
+        string name = IUtils.GetStringFromUser(true);
 
         string id;
         while(true)
         {
             Console.Clear();
             Console.WriteLine("Enter the Id of the client");
-            id = Utils.GetStringFromUser(false);
+            id = IUtils.GetStringFromUser(false);
 
             if(people.FindIndex(a => a.id.Equals(id)) == -1)
             {

@@ -7,4 +7,8 @@ class RedDog : Dog
     {
         
     }
+    public override void MakeSound()
+    {
+        Console.WriteLine("Woof");
+    }
 }
