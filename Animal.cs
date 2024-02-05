@@ -141,6 +141,12 @@ abstract class Animal
     //TODO this method does not support sub-types of animals
     public static Animal FindAnimalWithId(string? animalType)
     {
+        if(animals.Count == 0)
+        {
+            Console.WriteLine("Database is empty\n"
+            + "Press any key to continue...");
+            Console.ReadKey(true);
+        }
         PrintAllAnimals(false);
         int foundAnimalIndex;
         while (true)
@@ -287,7 +293,7 @@ abstract class Animal
                         break;
 
                     default:
-                    Console.WriteLine("Not found");
+                        Console.WriteLine("Not found");
                         break;
                 }
                 break;

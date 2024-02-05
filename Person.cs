@@ -1,8 +1,8 @@
 abstract class Person
 {
-    public static List<Person> people { get; set; } = new();
-    public string name { get; set; }
-    public string id { get; set; }
+    public static List<Person> people { get; } = new();
+    public string name { get; }
+    public string id { get; }
     public Person(string name, string id)
     {
         this.name = name;

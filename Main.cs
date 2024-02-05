@@ -12,6 +12,8 @@ class Program
 {
     static void Main(string[] args)
     {
+        //TODO look into using dictionaries instead of lists
+
         Establishment.establishments.Add(new Hotel("Mars", "Cat", new()));
 
         Establishment.establishments.Add(new Boarding("Earth", "Dog", new()));
