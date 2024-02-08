@@ -24,6 +24,9 @@ class Program
         Person.people.Add(new Client("Bill", "22"));
         Person.people.Add(new Staff("Colt", "17"));
 
+
+
+
         Establishment.ChooseAction();
     }
 }

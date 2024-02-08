@@ -1,3 +1,5 @@
+using System.Reflection;
+
 /// <summary>
 /// Class for handling and storing data for all derivatives of the animal class
 /// </summary>
@@ -250,12 +252,77 @@ abstract class Animal
         //TODO use types better
         // Uses a series of enums to get subclass type
 
+
+        /*
+        if(methodInfo is null)
+        {
+            Console.WriteLine("null");
+        }
+        else
+        {
+            Console.WriteLine(methodInfo);
+            Console.WriteLine(methodInfo.GetConstructors().Length);
+        }
+        */
+
+
+
+        string coolType = "OrangeCat";
+        Animal? o = (Animal?) Activator.CreateInstance(Type.GetType(coolType), new object[] { id, name, furColor, owner });
+
+        if(o is null)
+        {
+            Console.WriteLine("Failed");
+        }
+        else
+        {
+            Console.WriteLine("Success");
+            //animals.Add(o);
+        }
+
+        
+
+
         for (int i = 0; i < Enum.GetNames(typeof(AnimalTypes)).Length; i++)
         {
             Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(AnimalTypes), i)}");
         }
+
         Console.WriteLine("Choose an animal type");
 
+        {
+            int answer = IUtils.GetIntFromUser(Enum.GetNames(typeof(AnimalTypes)).Length) - 1;
+
+            Console.Clear();
+
+            Type? animalType = Type.GetType(Enum.GetName(typeof(AnimalTypes), answer));
+            Type? animalEnumType = animalType.GetNestedType(animalType.ToString() + "Types");
+            
+            /*
+            
+            if(animalTypeEnum is not null)
+            {
+                Console.WriteLine($"Type is {animalType}");
+                Console.WriteLine(animalTypeEnum.IsEnum);
+                Console.WriteLine(animalTypeEnum);
+            }
+            else
+            {
+                Console.WriteLine("Type is null");
+            }
+            */
+
+            for (int i = 0; i < Enum.GetNames(animalEnumType).Length; i++)
+            {
+                Console.WriteLine($"{i + 1}: {Enum.GetName(animalEnumType, i)}");
+            }
+            Console.WriteLine("Choose an animal type");
+            answer = IUtils.GetIntFromUser(Enum.GetNames(animalEnumType).Length);
+
+
+        }
+
+        /*
         switch(Enum.GetName(typeof(AnimalTypes), IUtils.GetIntFromUser(Enum.GetNames(typeof(AnimalTypes)).Length) - 1).ToString())
         {
             case "Dog":
@@ -297,6 +364,12 @@ abstract class Animal
                         break;
                 }
                 break;
+        }
+        */
+
+        foreach(Animal animal in animals)
+        {
+            Console.WriteLine(animal.GetType());
         }
 
         Console.WriteLine("Successfully added animal to the database");

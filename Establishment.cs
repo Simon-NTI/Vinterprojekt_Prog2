@@ -5,7 +5,7 @@ abstract class Establishment
 {
     public string location { get; set; }
     public string animal { get; set; }
-    public List<Animal> animalsOnSite { get; } = new(); 
+    public List<Animal> animalsOnSite { get; } = new();
     public static List<Establishment> establishments { get; set; } = new List<Establishment>();
 
     enum EstablishmentTypes
@@ -464,7 +464,6 @@ abstract class Establishment
 
                 break;
             }
-
 
 
             int establishmentIndex;
