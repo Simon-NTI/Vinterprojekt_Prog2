@@ -1,5 +1,3 @@
-using System.Reflection;
-
 /// <summary>
 /// Class for handling and storing data for all derivatives of the animal class
 /// </summary>
@@ -39,9 +37,10 @@ abstract class Animal
         + "2: View an animal based on id \n"
         + "3: View all animals in database\n"
         + "4: Remove an animal from the database\n"
-        + "5: Add an animal to the database");
+        + "5: Add an animal to the database\n"
+        + "6: Produce sound");
 
-        switch(IUtils.GetIntFromUser(5))
+        switch(IUtils.GetIntFromUser(6))
         {
             case 1:
                 FindAnimalsWithName();
@@ -62,7 +61,32 @@ abstract class Animal
             case 5:
                 AddNewAnimal();
                 break;
+
+            case 6:
+                FindAndMakeSound();
+                break;
         }
+    }
+
+    /// <summary>
+    /// Finds the animal with the given id in the database, then calls its makeSound method
+    /// </summary>
+    private static void FindAndMakeSound()
+    {
+        if(animals.Count == 0)
+        {
+            Console.WriteLine("No animals in database");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+            return;
+        }
+        Animal animal = FindAnimalWithId(null);
+        Console.Clear();
+        Console.Write($"{animal.name} says ");
+        animal.MakeSound();
+
+        Console.WriteLine("Press any key to continue...");
+        Console.ReadKey();
     }
 
     /// <summary>
@@ -97,7 +121,19 @@ abstract class Animal
     }
 
     /// <summary>
-    /// Prints all fields of animal objects who's name matches the player input
+    /// Prints information associated with this animal
+    /// </summary>
+    private void PrintAnimalInformation()
+    {
+        Console.WriteLine($"Id {id}\n"
+        + $"- Name: {name}\n"
+        + $"- Fur Color: {furColor}\n"
+        + $"- Owner Name: {owner.name}\n"
+        + $"- - Owner Id: {owner.id}");
+    }
+
+    /// <summary>
+    /// Prints associated information of the animal objects who's name matches the player input
     /// </summary>
     private static void FindAnimalsWithName()
     {
@@ -114,11 +150,7 @@ abstract class Animal
                 Console.WriteLine($"-- Found {foundAnimals.Count} animals with the name {nameToSearch} --");
                 foreach(Animal animal in foundAnimals)
                 {
-                    Console.WriteLine($"Id {animal.id}\n"
-                    + $"- Name: {animal.name}\n"
-                    + $"- Fur Color: {animal.furColor}\n"
-                    + $"- Owner Name: {animal.owner.name}\n"
-                    + $"- - Owner Id: {animal.owner.id}");
+                    animal.PrintAnimalInformation();
                 }
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
@@ -263,18 +295,20 @@ abstract class Animal
 
         if(animalType is null)
         {
-            Console.WriteLine("Something went wrong");
+            Console.WriteLine("Failed to find type");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
+            return;
         }
 
         Type? animalEnumType = animalType.GetNestedType(animalType.ToString() + "Types");
 
         if(animalEnumType is null)
         {
-            Console.WriteLine("Something went wrong");
+            Console.WriteLine("Failed to find types");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
+            return;
         }
 
         for (int i = 0; i < Enum.GetNames(animalEnumType).Length; i++)
@@ -283,14 +317,16 @@ abstract class Animal
         }
         Console.WriteLine("Choose an animal type");
         answer = IUtils.GetIntFromUser(Enum.GetNames(animalEnumType).Length) - 1;
+        Console.Clear();
 
         Animal? animalInstance = (Animal?) Activator.CreateInstance(Type.GetType(Enum.GetName(animalEnumType, answer)), new object[] { id, name, furColor, owner });
 
         if(animalInstance is null)
         {
-            Console.WriteLine("Something went wrong");
+            Console.WriteLine("Failed to find type");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
+            return;
         }
         else
         {
@@ -298,12 +334,13 @@ abstract class Animal
             Console.WriteLine("Successfully added animal to the database");
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
+            return;
         }
         
     }
 
     /// <summary>
-    /// Meow
+    /// Prints a line which is unique to each animal type
     /// </summary>
     public abstract void MakeSound();
 }

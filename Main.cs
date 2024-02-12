@@ -1,7 +1,7 @@
 ﻿namespace Vinterprojekt_Prog2;
 
     //TODO change properties to reflect actual usage
-    //TODO i.e remove set property from all fields that do not use it
+    //TODO i.e remove properties from all fields that do not use it
 
     //TODO add sealed modifier to methods which it is applicable
 

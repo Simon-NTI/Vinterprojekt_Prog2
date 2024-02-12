@@ -269,7 +269,7 @@ abstract class Establishment
                     Animal animal = Animal.FindAnimalWithId(null);
                     if(animals.FindIndex(a => a.id.Equals(animal.id)) != -1)
                     {
-                        Console.WriteLine("This person a already owns this pet");
+                        Console.WriteLine("This person already owns this pet");
                         continue;
                     }
                     else
@@ -343,6 +343,14 @@ abstract class Establishment
     private static void PrintAllEstablishments()
     {
         Console.Clear();
+        
+        if(establishments.Count == 0)
+        {
+            Console.WriteLine("No establishments in database");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+
         foreach(Establishment establishment in establishments)
         {
             Console.WriteLine($"Location: {establishment.location}\n"
