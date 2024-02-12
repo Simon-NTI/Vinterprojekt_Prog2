@@ -249,132 +249,57 @@ abstract class Animal
 
         Console.Clear();
 
-        //TODO use types better
-        // Uses a series of enums to get subclass type
-
-
-        /*
-        if(methodInfo is null)
-        {
-            Console.WriteLine("null");
-        }
-        else
-        {
-            Console.WriteLine(methodInfo);
-            Console.WriteLine(methodInfo.GetConstructors().Length);
-        }
-        */
-
-
-
-        string coolType = "OrangeCat";
-        Animal? o = (Animal?) Activator.CreateInstance(Type.GetType(coolType), new object[] { id, name, furColor, owner });
-
-        if(o is null)
-        {
-            Console.WriteLine("Failed");
-        }
-        else
-        {
-            Console.WriteLine("Success");
-            //animals.Add(o);
-        }
-
-        
-
-
         for (int i = 0; i < Enum.GetNames(typeof(AnimalTypes)).Length; i++)
         {
             Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(AnimalTypes), i)}");
         }
-
         Console.WriteLine("Choose an animal type");
+        
+        int answer = IUtils.GetIntFromUser(Enum.GetNames(typeof(AnimalTypes)).Length) - 1;
 
+        Console.Clear();
+
+        Type? animalType = Type.GetType(Enum.GetName(typeof(AnimalTypes), answer));
+
+        if(animalType is null)
         {
-            int answer = IUtils.GetIntFromUser(Enum.GetNames(typeof(AnimalTypes)).Length) - 1;
-
-            Console.Clear();
-
-            Type? animalType = Type.GetType(Enum.GetName(typeof(AnimalTypes), answer));
-            Type? animalEnumType = animalType.GetNestedType(animalType.ToString() + "Types");
-            
-            /*
-            
-            if(animalTypeEnum is not null)
-            {
-                Console.WriteLine($"Type is {animalType}");
-                Console.WriteLine(animalTypeEnum.IsEnum);
-                Console.WriteLine(animalTypeEnum);
-            }
-            else
-            {
-                Console.WriteLine("Type is null");
-            }
-            */
-
-            for (int i = 0; i < Enum.GetNames(animalEnumType).Length; i++)
-            {
-                Console.WriteLine($"{i + 1}: {Enum.GetName(animalEnumType, i)}");
-            }
-            Console.WriteLine("Choose an animal type");
-            answer = IUtils.GetIntFromUser(Enum.GetNames(animalEnumType).Length);
-
-
+            Console.WriteLine("Something went wrong");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
-        /*
-        switch(Enum.GetName(typeof(AnimalTypes), IUtils.GetIntFromUser(Enum.GetNames(typeof(AnimalTypes)).Length) - 1).ToString())
+        Type? animalEnumType = animalType.GetNestedType(animalType.ToString() + "Types");
+
+        if(animalEnumType is null)
         {
-            case "Dog":
-                Console.Clear();
-                for (int i = 0; i < Enum.GetNames(typeof(Dog.DogTypes)).Length; i++)
-                {
-                    Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(Dog.DogTypes), i)}");
-                }
-                switch(Enum.GetName(typeof(Dog.DogTypes), IUtils.GetIntFromUser(Enum.GetNames(typeof(Dog.DogTypes)).Length) - 1).ToString())
-                {
-                    case "RedDog":
-                        animals.Add(new RedDog(id, name, furColor, owner));
-                        break;
-
-                    case "YellowDog":
-                        animals.Add(new YellowDog(id, name, furColor, owner));
-                        break;
-                }
-                break;
-
-            case "Cat":
-                Console.Clear();
-                for (int i = 0; i < Enum.GetNames(typeof(Cat.CatTypes)).Length; i++)
-                {
-                    Console.WriteLine($"{i + 1}: {Enum.GetName(typeof(Cat.CatTypes), i)}");
-                }
-                switch(Enum.GetName(typeof(Cat.CatTypes), IUtils.GetIntFromUser(Enum.GetNames(typeof(Cat.CatTypes)).Length) - 1).ToString())
-                {
-                    case "OrangeCat":
-                        animals.Add(new OrangeCat(id, name, furColor, owner));
-                        break;
-
-                    case "PurpleCat":
-                        animals.Add(new PurpleCat(id, name, furColor, owner));
-                        break;
-
-                    default:
-                        Console.WriteLine("Not found");
-                        break;
-                }
-                break;
-        }
-        */
-
-        foreach(Animal animal in animals)
-        {
-            Console.WriteLine(animal.GetType());
+            Console.WriteLine("Something went wrong");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
         }
 
-        Console.WriteLine("Successfully added animal to the database");
-        Console.WriteLine("Press any key to continue...");
-        Console.ReadKey();
+        for (int i = 0; i < Enum.GetNames(animalEnumType).Length; i++)
+        {
+            Console.WriteLine($"{i + 1}: {Enum.GetName(animalEnumType, i)}");
+        }
+        Console.WriteLine("Choose an animal type");
+        answer = IUtils.GetIntFromUser(Enum.GetNames(animalEnumType).Length) - 1;
+
+        Animal? animalInstance = (Animal?) Activator.CreateInstance(Type.GetType(Enum.GetName(animalEnumType, answer)), new object[] { id, name, furColor, owner });
+
+        if(animalInstance is null)
+        {
+            Console.WriteLine("Something went wrong");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+        else
+        {
+            animals.Add(animalInstance);
+            Console.WriteLine("Successfully added animal to the database");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
+        
     }
 
     /// <summary>
